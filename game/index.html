@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Skyline Courier — a flight game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #071223; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+  }
+  #stage {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    max-width: 100vw;
+    max-height: 100vh;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+  }
+  #game { display: block; width: 100%; height: 100%; }
+  #hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: #e8f4ff;
+  }
+  #hud.hidden { display: none; }
+  .panel {
+    position: absolute;
+    background: rgba(8, 20, 34, 0.72);
+    border: 1px solid rgba(255, 214, 110, 0.45);
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+  .panel .label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #9fc4e8;
+  }
+  .panel .value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffe9a8;
+    text-shadow: 0 0 8px rgba(255, 214, 110, 0.6);
+  }
+  #hud-instruments { top: 12px; left: 12px; display: flex; gap: 18px; }
+  #hud-instruments .cell { min-width: 86px; }
+  #hud-score-box { top: 12px; right: 12px; text-align: right; }
+  #hud-score-box .value { font-size: 26px; }
+  #hud-combo {
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #7dff8a;
+    min-height: 18px;
+  }
+  #hud-objective {
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #ffe9a8;
+    white-space: nowrap;
+  }
+  #hud-bars { left: 12px; bottom: 12px; width: 240px; }
+  #hud-bars .row { margin: 6px 0; }
+  #hud-bars .bar {
+    height: 10px;
+    background: #123;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 3px;
+  }
+  #hud-bars .fill { height: 100%; background: #37d67a; transition: width 0.15s linear; }
+  #hud-bars .fill.low { background: #e05252; }
+  #hud-mission {
+    right: 12px;
+    bottom: 12px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #9fc4e8;
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" width="1280" height="720"></canvas>
+  <div id="hud" class="hidden">
+    <div id="hud-instruments" class="panel">
+      <div class="cell"><div class="label">ALTITUDE</div><div class="value" id="hud-alt">0 ft</div></div>
+      <div class="cell"><div class="label">SPEED</div><div class="value" id="hud-spd">0 kt</div></div>
+      <div class="cell"><div class="label">HEADING</div><div class="value" id="hud-hdg">000° N</div></div>
+    </div>
+    <div id="hud-objective" class="panel">Ring Run</div>
+    <div id="hud-score-box" class="panel">
+      <div class="label">SCORE</div>
+      <div class="value" id="hud-score">0</div>
+      <div id="hud-combo"></div>
+    </div>
+    <div id="hud-bars" class="panel">
+      <div class="row"><div class="label">FUEL</div><div class="bar"><div class="fill" id="hud-fuel-fill" style="width:100%"></div></div></div>
+      <div class="row"><div class="label">HULL</div><div class="bar"><div class="fill" id="hud-hull-fill" style="width:100%"></div></div></div>
+    </div>
+    <div id="hud-mission" class="panel">RING RUN</div>
+  </div>
+</div>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
